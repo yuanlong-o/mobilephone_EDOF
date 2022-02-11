@@ -1,6 +1,6 @@
-# Pix2Pix
+# Network for EDOF deconvolution
 
-Pytorch implementation of our Pix2Pix network
+Pytorch implementation of our network for EDOF deconvolution
 
 Our network takes blurry image as an input and procude the corresponding sharp estimate. 
 
