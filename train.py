@@ -39,7 +39,7 @@ os.environ["CUDA_VISIBLE_DEVICES"]="0, 1, 2, 3"
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # load dataset
-dirc_train = os.path.join(dirc_data, name_data, 'test')
+dirc_train = os.path.join(dirc_data, name_data, 'train')
 
 transform_train = transforms.Compose([RandomCrop((input_size, input_size)), RandomHorizonFlip(), Normalize(), ToTensor()])
 transform_inv = transforms.Compose([Denormalize()])
