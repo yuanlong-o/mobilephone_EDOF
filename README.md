@@ -1,8 +1,8 @@
 # Generation of training pairs for network
 
-To achieve the simulation-supervision training and increase the generalization of the neural network, we proposed a forward propagation model to simulate physically 
+To achieve the simulation-supervision training and increase the generalization of the neural network, we proposed a forward propagation model to simulate physically the imaging process of the miniaturized microscope.
 
-the imaging process of the miniaturized microscope. The corresponding implementation is written in MATLAB.
+The corresponding implementation is written in MATLAB.
 
 # Network for EDOF deconvolution
 
