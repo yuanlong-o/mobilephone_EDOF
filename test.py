@@ -3,11 +3,10 @@ import torch.nn as nn
 import os
 import tifffile
 import numpy as np
-from model import UNet, UNet_Pruning
+from model import UNet
 from dataset import *
 from config import *
 from torchvision import transforms
-from statistics import mean
 from collections import OrderedDict
 
 dirc_data = args.dirc_data
@@ -17,13 +16,11 @@ if not os.path.exists(dirc_result):
     os.makedirs(dirc_result)
 name_data = args.name_data
 
-batch_size = 4
+batch_size = 1
 
 in_channels = args.in_channels
 out_channels = args.out_channels
 kernel_channels = args.kernel_channels
-
-num_epoch = args.num_epoch
 
 os.environ["CUDA_VISIBLE_DEVICES"]="0, 1, 2, 3"
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -89,14 +86,6 @@ with torch.no_grad():
             count = batch_size * (i - 1) + j + 1
             fileset = {'count': count, 'input': "input_%d.tiff" % count, 'output': "output_%d.tiff" % count, 'label': "label_%d.tiff" % count}
 
-            tifffile.imsave(os.path.join(dirc_result, fileset['input']), input[j, :, :, :])
-            tifffile.imsave(os.path.join(dirc_result, fileset['output']), output[j, :, :, :])
-            tifffile.imsave(os.path.join(dirc_result, fileset['label']), label[j, :, :, :])
-            
-        # fileset = {'input': "input_%02d_%02d.tiff" % (i // 11 + 1, i % 11 + 1), 'output': "output_%02d_%02d.tiff" % (i // 11 + 1, i % 11 + 1), \
-        #            'label': "label_%02d.tiff" % (i // 11 + 1)}
-
-        # tifffile.imsave(os.path.join(dirc_result, fileset['input']), input[0, :, :, :])
-        # tifffile.imsave(os.path.join(dirc_result, fileset['output']), output[0, :, :, :])
-        # if i % 11 == 0:
-        #     tifffile.imsave(os.path.join(dirc_result, fileset['label']), label[0, :, :, :])
+            tifffile.imwrite(os.path.join(dirc_result, fileset['input']), input[j, :, :, :])
+            tifffile.imwrite(os.path.join(dirc_result, fileset['output']), output[j, :, :, :])
+            tifffile.imwrite(os.path.join(dirc_result, fileset['label']), label[j, :, :, :])

@@ -16,6 +16,7 @@ The model we used is the corrected Pix2Pix network with MSE Loss + Perceptual lo
 ## How to run
 
 ### Prerequisites
+- NVIDIA GPU (24 GB Memory) + CUDA
 - pytorch >= 1.5 and torchvision >=0.6 (recommend torch1.8.1 torchvision 0.8.0)
 - python >= 3.6
 - tifffile
@@ -24,12 +25,20 @@ The model we used is the corrected Pix2Pix network with MSE Loss + Perceptual lo
 - ptflops
 - tensorboard
 
+### Test with our demo data
+We upload test data(including input and output images) and pre-trained network checkpoint on https://doi.org/10.5281/zenodo.7950911.
 
-### Datasets
-Please organize the datasets using the following hierarchy:
+Please use the following script to test:
+```bash
+python test_demo.py --dirc_data ./EDOF_data_ckpt/data --name_data 4x_average_depth --dirc_ckpt ./EDOF_data_ckpt/network_ckpt --dirc_result ./result
+```
+
+### Train and Test with your own datasets
+
+If you want to apply our model to your own datasets, please organize the datasets using the following hierarchy:
 ```
 - datasets
-    - 4x_average_depth
+    - <your_dataset_name>
         - train
           - img_1.tiff
             ...
@@ -39,36 +48,31 @@ Please organize the datasets using the following hierarchy:
             ...
           - img_99.tiff
 ```
+Note: You should concatenate the label and input images in the dimension of width (format:[label, input]). It can be implemented by numpy function easily.
 
-
-### Train
-You can use the following script to obtain the train the model:
+You can use the following script to train the model:
 ```bash
-python train.py --dirc_data ./datasets --name_data 4x_average_depth
+python train.py --dirc_data ./datasets --name_data <your_dataset_name> --dirc_ckpt ./output_dir --dirc_log ./output_dir/log
 ```
 
-All the configuration and hyperparameters can be modified in the file of 'config.py'
-
-Note:
-If you want to train the model on your data, you should concatenate the label and input images in the dimension of width (format:[label, input]). It can be implemented by numpy function easily.
-
-
-### Test
-You can use the following script to obtain the testing results:
+If you want to finetune the network with our pre-trained checkpoint, please use the following script:
 ```bash
-python test.py --dirc_data ./datasets --name_data 4x_average_depth
+python train.py --dirc_data ./datasets --name_data <your_dataset_name> --dirc_pretrain <your_pretrained_ckpt_dir> --dirc_ckpt ./output_dir --dirc_log ./output_dir/log
 ```
 
+You can use the following script to test the model:
+```bash
+python test.py --dirc_data ./datasets --name_data <your_dataset_name> --dirc_ckpt ./output_dir --dirc_result ./output_dir/result
+```
 
 ### Tensorboard
-Loss and results during the course of training have saved in the tensorboard. You can use the following command obtain them:
+Loss and output images during training have saved in the tensorboard. You can view it by:
  ```bash
 tensorboard --logdir ./log
 ```
 
-
-## Calculate parameter
-You can use the following command to calculate the network's parameter:
+## Calculate parameters
+You can use the following script to calculate the network's parameter:
 ```bash
 python params.py
 ```

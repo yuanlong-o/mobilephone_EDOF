@@ -1,15 +1,15 @@
 import argparse
 
 # config the parameters
-parser = argparse.ArgumentParser(description='Train the pix2pix network')
+parser = argparse.ArgumentParser(description='Train the EDOF network')
 
-parser.add_argument('--dirc_data', default='./datasets', dest='dirc_data')
-parser.add_argument('--dirc_ckpt', default='./checkpoint', dest='dirc_ckpt')
+parser.add_argument('--dirc_data', default='', dest='dirc_data')
+parser.add_argument('--dirc_ckpt', default='', dest='dirc_ckpt')
 parser.add_argument('--dirc_pretrain', default='', dest='dirc_pretrain')
-parser.add_argument('--dirc_log', default='./log', dest='dirc_log')
-parser.add_argument('--dirc_result', default='./results', dest='dirc_result')
+parser.add_argument('--dirc_log', default='', dest='dirc_log')
+parser.add_argument('--dirc_result', default='', dest='dirc_result')
 
-parser.add_argument('--name_data', type=str, default='4x_average_depth', dest='name_data')
+parser.add_argument('--name_data', type=str, default='', dest='name_data')
 
 parser.add_argument('--input_size', type=int, default=512, dest='input_size')
 parser.add_argument('--batch_size', type=int, default=16, dest='batch_size')
